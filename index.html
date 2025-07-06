@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LinkCleaner</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
+
+        body {
+            margin: 0;
+            font-family: 'Orbitron', sans-serif;
+            background: url('bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            backdrop-filter: brightness(0.6);
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px #000;
+        }
+
+        input[type="text"] {
+            width: 80%;
+            max-width: 500px;
+            padding: 15px;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        a {
+            color: #0ff;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+    <h1>LINKCLEANER</h1>
+    <input type="text" id="inputLink" placeholder="Enter TikTok Link">
+    <button onclick="cleanLink()">CLEAN LINK</button>
+    <p id="output"></p>
+
+    <script>
+        function cleanLink() {
+            const input = document.getElementById("inputLink").value.trim();
+            let videoId = "";
+
+            if (input.includes("vm.tiktok.com")) {
+                document.getElementById("output").innerText = "Short link detected. TikTok will handle redirection.";
+                return;
+            }
+
+            const match = input.match(/video\/(\d+)/);
+            if (match && match[1]) {
+                videoId = match[1];
+                const clean = `https://www.tiktok.com/video/${videoId}`;
+                document.getElementById("output").innerHTML = `<a href="${clean}" target="_blank">${clean}</a>`;
+            } else {
+                document.getElementById("output").innerText = "Invalid TikTok link.";
+            }
+        }
+    </script>
+</body>
+</html>
